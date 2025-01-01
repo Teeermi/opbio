@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +10,117 @@ body {
     background-color: #202021;
     width: 100vw;
     height: 100vh;
+
+
+}
+
+.wrapperMain {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 1rem;
+}
 
+
+body img {
+    width: 9.375rem;
+    height: 9.375rem;
+}
+
+.username h1, .password h1, .email h1, .invite h1 {
+    color: #D9D9D9;
+
+    font-family: Onest, serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.bg1 {
+    width: 22.6rem;
+    height: 3.05rem;
+    border-radius: 0.9375rem;
+    background: #202021;
+    box-shadow: 0px 4px 15.4px 6px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bg1 i {
+    font-size: 1.2rem;
+    color: #D9D9D9;
+    margin-left: 0.75rem;
+}
+
+.username h1, .password h1, .email h1, .invite h1 {
+    margin-bottom: 0.56rem;
+}
+.username input, .password input, .email input, .invite input {
+    all: unset;
+    width: 100%;
+    color: #D9D9D9;
+    font-family: Onest, serif;
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.invWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.invWrapper h2, .alr {
+    color: rgba(217, 217, 217, 0.65);
+
+    font-family: Onest, serif;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.invWrapper h2:hover, .alr:hover {
+    color: #D9D9D9;
+    cursor: pointer;
+}
+
+.tos {
+    margin-left: 1.7rem;
+    display: flex;
+    gap: 0.88rem;
+    width: 22.6rem;
+}
+
+.tos label {
+    color: #D9D9D9;
+
+    text-align: center;
+    font-family: Onest;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 600;
+
+}
+
+.reg {
+    margin-top: 1rem;
+    width: 22.6rem;
+    height: 3.05rem;
+    border-radius: 0.9375rem;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 15.4px 6px rgba(0, 0, 0, 0.25);
+    color: #202021;
+
+    font-family: Onest;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+
+}
+
+.alr {
+    margin-top: 12rem;
 }
