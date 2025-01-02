@@ -29,6 +29,16 @@ export async function createUser(formData: FormData) {
                 invite: formData.get("invite") as string,
             }
         })
+
+        await prisma.invites.update({
+            where: {
+                code: invite.code
+            },
+            data: {
+                user: formData.get("username") as string,
+        }
+        })
+
         return {status: "success"}
 
     } catch (e) {
