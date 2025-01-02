@@ -2,6 +2,7 @@
 
 
 import prisma from "@/app/_lib/db";
+import { Prisma } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 
 
@@ -10,6 +11,14 @@ export async function createUser(formData: FormData) {
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(formData.get("password") as string, salt);
+        const invite = await prisma.invites.findUnique({
+            where: {
+                code: formData.get("invite") as string
+            },
+        });
+
+        if (!invite) return;
+
 
 
         await prisma.user.create({
@@ -20,10 +29,17 @@ export async function createUser(formData: FormData) {
                 invite: formData.get("invite") as string,
             }
         })
-    } catch {
+        return {status: "success"}
 
+    } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            // The .code property can be accessed in a type-safe manner
+            if (e.code === 'P2002') {
+                console.log(
+                    'There is a unique constraint violation, a new user cannot be created with this email'
+                )
+            }
     }
 
-    return "siema";
 
-}
+}}
