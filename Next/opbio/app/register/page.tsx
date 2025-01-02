@@ -1,20 +1,22 @@
+"use client"
 import "./main.css"
 import {createUser} from "@/app/_actions/actions";
+import {useState} from "react";
 
 
 export default function Page() {
+    const [test, setTest] = useState(0);
 
+    async function handleCreateUser(formData: FormData) {
+        console.log(await createUser(formData));
+        setTest(1)
 
-async function test(formData: FormData) {
-    "use server"
+    }
 
-    const resposnse = await createUser(formData)
-    console.log(resposnse);
-}
 
 
     return (
-        <form action={test} className="wrapperMain">
+        <form action={handleCreateUser} className="wrapperMain">
             <img src="./a7ed008cb385e998bfa2669d055f856d.png" alt=""/>
 
             <div className="username">
