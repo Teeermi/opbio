@@ -1,22 +1,29 @@
 "use client"
 import "./main.css"
 import {createUser} from "@/app/_actions/actions";
-import {useState} from "react";
+
 
 
 export default function Page() {
-    const [test, setTest] = useState(0);
 
     async function handleCreateUser(formData: FormData) {
         console.log(await createUser(formData));
-        setTest(1)
+
 
     }
 
 
 
     return (
-        <form action={handleCreateUser} className="wrapperMain">
+
+        <>
+
+            <div className="notify">
+                <div className="sqr">
+                    <i className="fa-solid fa-circle-exclamation"></i>
+                </div>
+            </div>
+            <form action={handleCreateUser} className="wrapperMain">
             <img src="./a7ed008cb385e998bfa2669d055f856d.png" alt=""/>
 
             <div className="username">
@@ -64,5 +71,6 @@ export default function Page() {
             <h1 className="alr">Already have and account? Login</h1>
 
         </form>
+        </>
     )
 }
