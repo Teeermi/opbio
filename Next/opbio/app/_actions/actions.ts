@@ -16,8 +16,15 @@ export async function createUser(formData: FormData) {
                 code: formData.get("invite") as string
             },
         });
+        console.log(invite);
 
-        if (!invite) return;
+        if (!invite) {
+            return {status: "error", code: "INF"};
+        }
+
+        if (invite.user) {
+            return {status: "error", code: "RI"};
+        }
 
 
 
@@ -44,12 +51,9 @@ export async function createUser(formData: FormData) {
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
             // The .code property can be accessed in a type-safe manner
-            if (e.code === 'P2002') {
-                console.log(
-                    'There is a unique constraint violation, a new user cannot be created with this email'
-                )
-            }
-    }
-
+            return `Error: ${e.meta?.target}`;
+        } else {
+            throw e;
+        }
 
 }}
