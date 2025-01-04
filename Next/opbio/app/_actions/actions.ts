@@ -28,7 +28,14 @@ export async function createUser(formData: FormData) {
 
 
 
-      
+        await prisma.user.create({
+            data: {
+                email: formData.get("email") as string,
+                password: hashedPassword,
+                username: formData.get("username") as string,
+                invite: formData.get("invite") as string,
+            }
+        })
 
         await prisma.invites.update({
             where: {
