@@ -46,12 +46,11 @@ export async function createUser(formData: FormData) {
         }
         })
 
-        return {status: "success"}
+        return {status: "success", code:"DN"}
 
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
-            // The .code property can be accessed in a type-safe manner
-            return `Error: ${e.meta?.target}`;
+            return {status: "error", code: `${e.meta?.targe}`};
         } else {
             throw e;
         }
