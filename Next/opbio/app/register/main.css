@@ -31,13 +31,14 @@ body img {
 .username h1, .password h1, .email h1, .invite h1 {
     color: #D9D9D9;
 
+
     font-family: Onest, serif;
     font-size: 1rem;
     font-style: normal;
     font-weight: 500;
 }
 
-.bg1 {
+.bg1, .bg2, .bg3, .bg4 {
     width: 22.6rem;
     height: 3.05rem;
     border-radius: 0.9375rem;
@@ -48,7 +49,7 @@ body img {
     gap: 1rem;
 }
 
-.bg1 i {
+.bg1 i, .bg2 i, .bg3 i, .bg4 i {
     font-size: 1.2rem;
     color: #D9D9D9;
     margin-left: 0.75rem;
@@ -65,14 +66,7 @@ body img {
     font-size: 0.9rem;
     font-style: normal;
     font-weight: 500;
-}
-
-
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-    background-color: transparent !important;
-    box-shadow: 0 0 0px 1000px transparent inset !important;
+    background-color: #202021;
 }
 
 
@@ -130,49 +124,26 @@ select:-webkit-autofill {
 
 }
 
-.alr {
-    margin-top: 12rem;
+
+.username h3, .password h3, .email h3, .invite h3 {
+    color: #800101;
+    font-family: Onest, serif;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 0.25rem;
 }
 
-.notify {
-    position: absolute;
-    width: 19.775rem;
-    height: 4.725rem;
-    border-radius: 0.9375rem;
-    border-left: 1px solid #F00;
-    background: #202021;
-    box-shadow: 0px 4px 15.4px 6px rgba(0, 0, 0, 0.25);
-    right: 2rem;
-    top: 5rem;
-    animation: myAnim 2s ease 0s 1 normal forwards;
-    display: flex;
-
-    align-items: center;
+.errorBorder {
+    border: 1px solid #800101;
 }
 
-@keyframes myAnim {
-    0% {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.sqr {
-    width: 1.9rem;
-    height: 1.9rem;
-    border-radius: 0.3125rem;
-    background: #F00;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.sqr i {
-    fill: #202021;
-    font-size: 1.3rem;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #23232329;
 }
