@@ -2,6 +2,7 @@
 import "./main.css"
 import {createUser} from "@/app/_actions/actions";
 import {useRef} from "react";
+import {cookies} from "next/headers";
 
 interface Response {
     code: string;
@@ -45,6 +46,7 @@ export default function Page() {
             const repsonse = await createUser(formData);
 
         console.log(repsonse);
+
 
     }
 
