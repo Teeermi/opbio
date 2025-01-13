@@ -4,8 +4,10 @@
 import prisma from "@/app/_lib/db";
 import { Prisma } from "@prisma/client";
 import bcrypt from 'bcryptjs';
+import {redirect} from "next/navigation";
+import {Resend} from "resend";
 
-
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function createUser(formData: FormData) {
     try {
@@ -34,6 +36,7 @@ export async function createUser(formData: FormData) {
                 password: hashedPassword,
                 username: formData.get("username") as string,
                 invite: formData.get("invite") as string,
+                otpVerified: false
             }
         })
 
@@ -46,7 +49,14 @@ export async function createUser(formData: FormData) {
         }
         })
 
-        return {status: "success", code:"DN"}
+        await resend.emails.send({
+            from: 'onboarding@resend.dev',
+            to: 'olafkrawczyk13@icloud.com',
+            subject: 'Hello World',
+            html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+        });
+
+        redirect("/otp")
 
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -56,3 +66,5 @@ export async function createUser(formData: FormData) {
         }
 
 }}
+
+
