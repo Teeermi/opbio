@@ -42,7 +42,9 @@ export default function Page() {
             supportRefs(inviteError.current, bg4.current, "Invite is required");
         }
 
+            const repsonse = await createUser(formData);
 
+        console.log(repsonse);
 
     }
 
