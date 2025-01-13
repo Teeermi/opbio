@@ -21,6 +21,7 @@ model User {
   username String @unique
   password String
   invite String @unique
+  otpVerified Boolean
 }
 
 model Invites {
