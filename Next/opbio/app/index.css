@@ -432,10 +432,4 @@ margin-top: 2rem;
     }
 }
 
-@media (max-width: 738px) {
-    .rightSide {
-        scale: 0.8;
-        margin: -4rem 0;
-    }
-}
 
