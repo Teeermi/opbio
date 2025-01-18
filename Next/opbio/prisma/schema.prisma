@@ -28,3 +28,9 @@ model Invites {
   code String @unique
   user String?
 }
+
+model Otp {
+  email String @unique
+  code String
+  date String
+}
