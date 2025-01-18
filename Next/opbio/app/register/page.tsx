@@ -2,14 +2,13 @@
 import "./main.css"
 import {createUser} from "@/app/_actions/actions";
 import {useRef} from "react";
-import {cookies} from "next/headers";
+import {deleteSession} from "@/app/_lib/sessions";
 
-interface Response {
-    code: string;
-   status: string;
-}
+
+
 
 export default function Page() {
+
 
     const usernameError = useRef<HTMLDivElement>(null);
     const passwordError = useRef<HTMLDivElement>(null);
