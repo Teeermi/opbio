@@ -6,7 +6,9 @@ import { Prisma } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 import {redirect} from "next/navigation";
 import {Resend} from "resend";
+import {createSession} from "@/app/_lib/sessions";
 import {cookies} from "next/headers";
+
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -50,18 +52,29 @@ export async function createUser(formData: FormData) {
         }
         })
 
+        await createSession(formData.get("username") as string)
+
+
+        const otpCode = Math.floor(100000 + Math.random() * 900000);
+
+        await prisma.otp.create({
+            data: {
+                email: formData.get("email") as string,
+                code: otpCode.toString(),
+                date: new Date(Date.now()).toISOString()
+            }
+        })
+
+
         await resend.emails.send({
             from: 'onboarding@resend.dev',
             to: 'olafkrawczyk13@icloud.com',
             subject: 'Hello World',
-            html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+            html: `${otpCode}`
         });
 
-        await createSession(formData.get("username") as string)
 
-        const session = (await cookies()).get('session')?.value
 
-        console.log(session);
 
         redirect("/otp")
 
@@ -76,18 +89,7 @@ export async function createUser(formData: FormData) {
 
 
 
-export async function createSession(userId: string) {
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
-    const session = { userId, expiresAt: expiresAt.toISOString() }; // Serialize expiresAt to string
-
-    const cookieStore = await cookies();
-
-    cookieStore.set('session', JSON.stringify(session), {
-        httpOnly: true,
-        secure: true,
-        expires: expiresAt,
-        sameSite: 'lax',
-        path: '/',
-    });
+export async function getSession() {
+        return (await cookies()).get('session')?.value
 }
 
