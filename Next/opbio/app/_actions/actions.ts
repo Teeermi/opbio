@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 import {redirect} from "next/navigation";
 import {Resend} from "resend";
-import {createSession} from "@/app/_lib/sessions";
+import {createSession, decrypt} from "@/app/_lib/sessions";
 import {cookies} from "next/headers";
 
 
@@ -52,7 +52,7 @@ export async function createUser(formData: FormData) {
         }
         })
 
-        await createSession(formData.get("username") as string)
+        await createSession(formData.get("email") as string)
 
 
         const otpCode = Math.floor(100000 + Math.random() * 900000);
@@ -84,12 +84,14 @@ export async function createUser(formData: FormData) {
         } else {
             throw e;
         }
-
 }}
 
 
 
 export async function getSession() {
-        return (await cookies()).get('session')?.value
+    return (await cookies()).get('session')?.value;
 }
 
+export async function otpCheck(formData: FormData) {
+    console.log(formData.get("value") as unknown);
+}
