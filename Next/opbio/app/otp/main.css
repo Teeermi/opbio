@@ -18,3 +18,39 @@ display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+.otpContainer h1 {
+    color: #D9D9D9;
+
+    font-family: Onest;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.otpContainer h2 {
+    width: 26.9375rem;
+    color: rgba(217, 217, 217, 0.83);
+    text-align: center;
+    font-family: Onest;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.otpContainer input {
+    all: unset;
+    width: 3.5625rem;
+    height: 3.8125rem;
+    border-radius: 0.9375rem;
+    background: #202021;
+    box-shadow: 0px 4px 15.4px 6px rgba(0, 0, 0, 0.25);
+    color: white;
+}
+
+.inputsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
