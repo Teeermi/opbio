@@ -49,12 +49,22 @@ export default function Page() {
         }
     }
 
+async function apiOtpCall() {
+    const response = await fetch("/api/otp/", {
+        method: "POST", // Zmiana na POST
+        headers: {
+            "Content-Type": "application/json", // Nagłówek informujący o formacie danych
+        },
+        body: JSON.stringify({otp}), // Prześlij puste ciało lub dodaj dane, jeśli wymagane
+    });
 
+    const data = await response.json();
+}
 
     return <div className="otpContainer" >
         <h1>Verify You Email Address</h1>
         <h2>To complete your registration, please verify your email address. Check your inbox for a verification link and follow the instructions to activate your account</h2>
-        <form action={otpCheck} className="otpForm">
+        <form action={apiOtpCall} className="otpForm">
 
             <div className="inputsContainer">
                 {otp.map((digit, index) => (
