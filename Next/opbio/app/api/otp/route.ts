@@ -29,11 +29,7 @@ export async function POST(request: Request) {
 
 
 
-    if (code.code == data.join("")) {
-       console.log("DZIALA")
-    } else {
-        console.log("ZLY KOD")
-    }
+
 
 
 
