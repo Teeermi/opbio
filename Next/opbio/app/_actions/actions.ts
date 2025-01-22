@@ -3,10 +3,12 @@
 
 import prisma from "@/app/_lib/db";
 import { Prisma } from "@prisma/client";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import bcrypt from 'bcryptjs';
 import {redirect} from "next/navigation";
 import {Resend} from "resend";
-import {createSession, decrypt} from "@/app/_lib/sessions";
+import {createSession, decrypt, deleteSession, updateSession} from "@/app/_lib/sessions";
 import {cookies} from "next/headers";
 
 
@@ -21,7 +23,43 @@ export async function createUser(formData: FormData) {
                 code: formData.get("invite") as string
             },
         });
-        console.log(invite);
+        const existEmail = await prisma.user.findUnique({
+            where: {
+                email: formData.get("email") as string
+            },
+        });
+        const existUserName = await prisma.user.findUnique({
+            where: {
+                username: formData.get("username") as string
+            },
+        });
+
+
+        if (existEmail && existUserName && (!invite || invite.user)) {
+            return {status: "error", code: "EEUNINF"};
+        }
+
+        if (existEmail && existUserName) {
+            return {status: "error", code: "EEUN"};
+        }
+
+
+        if (existEmail && (!invite || invite.user)) {
+            return {status: "error", code: "EEINF"};
+        }
+
+        if (existUserName && (!invite || invite.user)) {
+            return {status: "error", code: "EUNINF"};
+        }
+
+
+        if (existEmail) {
+            return {status: "error", code: "EE"};
+        }
+
+        if (existUserName) {
+            return {status: "error", code: "EUN"};
+        }
 
         if (!invite) {
             return {status: "error", code: "INF"};
@@ -76,7 +114,7 @@ export async function createUser(formData: FormData) {
 
 
 
-        redirect("/otp")
+        return {status: "success", code: "SS"};
 
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -86,12 +124,97 @@ export async function createUser(formData: FormData) {
         }
 }}
 
+export async function changeOtpMail(emailToChange: string, emailFromDB: string) {
+    const existEmail = await prisma.user.findUnique({
+        where: {
+            email: emailToChange
+        },
+    });
+    if (existEmail) {
+        return {status: "error", code: "EE"};
+    }
 
+console.log(emailToChange, emailFromDB);
+
+
+    await prisma.user.update({
+        where: {
+            email: emailFromDB
+        },
+        data: {
+            email: emailToChange
+        }
+    })
+
+    await prisma.otp.delete({
+        where: {
+            email: emailFromDB
+        }
+    })
+
+    const otpCode = Math.floor(100000 + Math.random() * 900000);
+
+    await prisma.otp.create({
+        data: {
+            email: emailToChange,
+            code: otpCode.toString(),
+            date: new Date(Date.now()).toISOString()
+        }
+    })
+
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: 'olafkrawczyk13@icloud.com',
+        subject: 'Hello World',
+        html: `${otpCode}`
+    });
+
+
+
+    await deleteSession();
+
+    await createSession(emailToChange);
+
+
+    return {status: "success", code: "SS"};
+}
 
 export async function getSession() {
     return (await cookies()).get('session')?.value;
 }
 
-export async function otpCheck(formData: FormData) {
-    console.log(formData.get("value") as unknown);
+export async function getSessionEmail(session:string | undefined) {
+    const sessionData = await decrypt(session);
+    return sessionData?.userId;
+
+}
+
+export async function resendOtp(session: string) {
+    const sessionData = await decrypt(session);
+    const otpCode = Math.floor(100000 + Math.random() * 900000);
+
+
+
+    await prisma.otp.delete({
+        where: {
+            email: sessionData?.userId
+        }
+    })
+
+    await prisma.otp.create({
+        data: {
+            email: sessionData?.userId,
+            code: otpCode.toString(),
+            date: new Date(Date.now()).toISOString()
+        }
+    })
+
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: 'olafkrawczyk13@icloud.com',
+        subject: 'Hello World',
+        html: `${otpCode}`
+    });
+
+    return {status: "success", code: "SS"};
 }
