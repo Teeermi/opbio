@@ -1,9 +1,9 @@
 "use client"
 
 import "./main.css"
-import {getSession, otpCheck} from "@/app/_actions/actions";
+import {getSession, resendOtp} from "@/app/_actions/actions";
 import {useEffect, useRef, useState} from "react";
-import {notFound} from "next/navigation";
+import {notFound, redirect} from "next/navigation";
 import Link from "next/link";
 
 
@@ -12,19 +12,23 @@ import Link from "next/link";
 export default function Page() {
     const [session, setSession] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState(true);
+    const [timerExist, setTimerExist] = useState(false);
+
     const [otp, setOtp] = useState(new Array(6).fill(""));
-
-
+    const verifyOtpRef = useRef<HTMLFormElement>(null);
+    const resendCode = useRef<HTMLFormElement>(null);
 
 
     useEffect(() => {
-        async function essa() {
+        async function fetchData() {
             const response: string | undefined = await getSession();
             setSession(response);
             setLoading(false);
         }
 
-        essa();
+        fetchData();
+        const timerExistFromCache = localStorage.getItem("timerExist") === "true";
+        setTimerExist(timerExistFromCache);
 
     }, []);
 
@@ -41,7 +45,6 @@ export default function Page() {
 
             if (element) {
 
-                console.log(otp)
                 element.focus();
             } else {
                 console.warn(`Element with class .input${index} not found.`);
@@ -49,17 +52,95 @@ export default function Page() {
         }
     }
 
+    function handleBackspaceAndEnter(e: React.KeyboardEvent<HTMLInputElement>, index: number) {
+        if (e.key === "Backspace" && !e.currentTarget.value && index > 0) {
+            const previousElement = document.querySelector(`.input${index}`) as HTMLElement | null;
+            if (previousElement) {
+                const newArr = [...otp];
+
+                newArr[index - 1] = "";
+                setOtp(newArr);
+
+                previousElement.focus();
+            }
+        }
+    }
+
 async function apiOtpCall() {
+
+
+
+
+    if (otp.join("").length < 6) {
+        if (verifyOtpRef.current) {
+            verifyOtpRef.current.classList.add("errorOtp");
+            verifyOtpRef.current.textContent = "Invalid OTP";
+            return;
+        }
+
+    }
+
+
     const response = await fetch("/api/otp/", {
-        method: "POST", // Zmiana na POST
+        method: "POST",
         headers: {
-            "Content-Type": "application/json", // Nagłówek informujący o formacie danych
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({otp}), // Prześlij puste ciało lub dodaj dane, jeśli wymagane
+        body: JSON.stringify({otp}),
     });
 
     const data = await response.json();
+
+    console.log(data);
+
+    if (data?.message === "Error") {
+        if (verifyOtpRef.current) {
+            verifyOtpRef.current.classList.add("errorOtp");
+            verifyOtpRef.current.textContent = "Invalid OTP";
+            return;
+        }
+    }
+
+    if (data?.message === "Success") {
+        if (verifyOtpRef.current) {
+            verifyOtpRef.current.classList.add("successOtp");
+            verifyOtpRef.current.textContent = "Success Redirecting...";
+
+            setTimeout(() => {
+                redirect("/dashboard");
+            }, 5000);
+        }
+    }
 }
+
+async function handleResendCode() {
+    if (session) {
+        if (timerExist && resendCode.current) {
+            resendCode.current.textContent = "You can resend code in 5 minutes";
+            return;
+        }
+
+        const response = await resendOtp(session);
+
+
+        if (response?.status === "success") {
+            if (resendCode.current) {
+
+                resendCode.current.textContent = "Code has been sent";
+                setTimerExist(true);
+                localStorage.setItem("timerExist", "true");
+                setTimeout(() => {
+                    setTimerExist(false);
+
+                } , 500000);
+
+            }
+
+
+        }
+    }
+}
+
 
     return <div className="otpContainer" >
         <h1>Verify You Email Address</h1>
@@ -68,14 +149,14 @@ async function apiOtpCall() {
 
             <div className="inputsContainer">
                 {otp.map((digit, index) => (
-                    <input key={index} name={`value`} type="text" className={`input${index + 1}`} value={digit} onChange={e => handleChange(e.target.value, index)}/>
+                    <input key={index} name={`value`} type="number" max={9} className={`input${index + 1}`}  onKeyUp={(e)=> handleBackspaceAndEnter(e, index)} value={digit} onChange={e => handleChange(e.target.value, index)}/>
                 ))}
             </div>
-            <h3>Want to Change Your Email Address? <Link href="/" >Change here</Link></h3>
+            <h3>Want to Change Your Email Address? <Link href="/change" >Change here</Link></h3>
 
-            <button className="submitForm">Verify Email</button>
+            <button className="submitBtn" ref={verifyOtpRef} >Verify Email</button>
         </form>
-        <h4>Resend code</h4>
+        <h4 onClick={handleResendCode} ref={resendCode} >Resend code</h4>
 
     </div>;
 }
