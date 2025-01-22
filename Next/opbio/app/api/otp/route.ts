@@ -1,12 +1,6 @@
 import prisma from "@/app/_lib/db";
 import {cookies} from "next/headers";
-import {decrypt} from "@/app/_lib/sessions";
-import {redirect} from "next/navigation";
-
-export async function GET(request: Request) {
-    return new Response('Hello, Next.js 15!');
-}
-
+import {decrypt, deleteSession} from "@/app/_lib/sessions";
 
 
 export async function POST(request: Request) {
@@ -15,7 +9,12 @@ export async function POST(request: Request) {
     const data = res.otp;
 
     const session = (await cookies()).get('session')?.value
-    const privateData : unknown = await decrypt(session);
+
+    const privateData = await decrypt(session) as { userId: string } | undefined;
+
+    if (!privateData) {
+        return new Response('Session decryption failed', { status: 400 });
+    }
 
 
 
@@ -28,16 +27,32 @@ export async function POST(request: Request) {
 
 
 
+    if (code?.code == data.join("")) {
 
-    if (code.code == data.join("")) {
-       console.log("DZIALA")
+        await prisma.user.update({
+            where: {
+                email: privateData.userId
+            },
+            data: {
+                otpVerified: true,
+            }
+        })
+
+
+       await prisma.otp.delete({
+            where: {
+                email: privateData.userId
+            }
+        })
+
+        await deleteSession();
+
+
+        return new Response(JSON.stringify({ message: 'Success' }), { status: 200 });
     } else {
-        console.log("ZLY KOD")
+        return new Response(JSON.stringify({ message: 'Error' }), { status: 404 });
     }
 
 
 
-
-
-    return Response.json({ res });
 }
