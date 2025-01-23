@@ -46,7 +46,7 @@ nav img {
     height: 7.8125rem;
 }
 
-nav button {
+nav a {
     all: unset;
     display: flex;
     justify-content: center;
@@ -63,6 +63,10 @@ nav button {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+}
+
+nav a:hover {
+    cursor: pointer;
 }
 
 header {
