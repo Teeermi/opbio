@@ -90,7 +90,7 @@ export async function createUser(formData: FormData) {
         }
         })
 
-        await createSession(formData.get("email") as string)
+        await createSession(formData.get("email") as string, false);
 
 
         const otpCode = Math.floor(100000 + Math.random() * 900000);
@@ -173,7 +173,7 @@ console.log(emailToChange, emailFromDB);
 
     await deleteSession();
 
-    await createSession(emailToChange);
+    await createSession(emailToChange, false);
 
 
     return {status: "success", code: "SS"};
@@ -186,6 +186,12 @@ export async function getSession() {
 export async function getSessionEmail(session:string | undefined) {
     const sessionData = await decrypt(session);
     return sessionData?.userId;
+
+}
+
+export async function checkIfOtpVerified(session:string | undefined) {
+    const sessionData = await decrypt(session);
+    return sessionData?.verifiedOtp;
 
 }
 
