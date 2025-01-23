@@ -8,7 +8,7 @@ export default async function Home() {
           <img
               src="https://s3-alpha-sig.figma.com/img/4d1b/1b93/a7ed008cb385e998bfa2669d055f856d?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BNGVYnawDb~-lZqYi63gf2hn-iGN5pmgXHm4woQBLlYf~D3quh3IfjNsQm~xsYmqOd7v8r4YZXEPttRCVbD5SU5FSCEFrLJtBtz~~Enpk6ac6~9J27LO52AmuLMkFCvktTbJwkzTZTIQLHrTRAFFL6c6Q5XVNomDrQmsrI-XPhSTrirDnwjj8JCwp02ITgLtlIo8Axh6H0daqm8UgAG-2WmG5XCaJsSNgYIhEP27mTmUDdGvYeURiKtY~1ivuQk0yHFN2CjXJYOTI-O2K13XhiCj6RPQHARJxGNzqnk~Fd46lDznjnWCUQIhB~JX6C-JAkIw52j7GJlKQ6QTAVGV3g__"
               alt=""/>
-          <button>Login</button>
+          <Link href="/login" >Login</Link>
         </nav>
         <header>
           <div className="leftSide">
