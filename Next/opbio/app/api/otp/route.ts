@@ -1,6 +1,7 @@
 import prisma from "@/app/_lib/db";
 import {cookies} from "next/headers";
-import {decrypt, deleteSession} from "@/app/_lib/sessions";
+import {createSession, decrypt, deleteSession} from "@/app/_lib/sessions";
+import {getSession} from "@/app/_actions/actions";
 
 
 export async function POST(request: Request) {
@@ -46,6 +47,9 @@ export async function POST(request: Request) {
         })
 
         await deleteSession();
+
+        await createSession(privateData.userId, true);
+
 
 
         return new Response(JSON.stringify({ message: 'Success' }), { status: 200 });
