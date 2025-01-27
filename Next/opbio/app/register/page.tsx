@@ -15,7 +15,7 @@ export default function Page() {
     const passwordError = useRef<HTMLDivElement>(null);
     const emailError = useRef<HTMLDivElement>(null);
     const inviteError = useRef<HTMLDivElement>(null);
-    const verifyOtpRef = useRef<HTMLFormElement>(null);
+    const verifyOtpRef = useRef<HTMLButtonElement>(null);
 
     const bg1 = useRef<HTMLDivElement>(null);
     const bg2 = useRef<HTMLDivElement>(null);
