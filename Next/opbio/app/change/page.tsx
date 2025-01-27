@@ -2,15 +2,17 @@
 
 import {notFound, redirect} from "next/navigation";
 import {useEffect, useRef, useState} from "react";
-import {changeOtpMail, getSession, getSessionEmail} from "@/app/_actions/actions";
+import {changeOtpMail, checkIfOtpVerified, getSession, getSessionEmail} from "@/app/_actions/actions";
 import Link from "next/link";
 import "./main.css";
 
 export default function Page() {
-    const [session, setSession] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [emailFromDB, setEmailFromDB] = useState<string | undefined>(undefined);
-    const verifyOtpRef = useRef<HTMLFormElement>(null);
+    const verifyOtpRef = useRef<HTMLButtonElement>(null);
+    const [testOne, setTestOne] = useState<boolean | undefined>(undefined);
+    const [session, setSession] = useState<string | undefined>(undefined);
+
 
 
     const bg1 = useRef<HTMLDivElement>(null);
@@ -21,8 +23,11 @@ export default function Page() {
     useEffect(() => {
         async function fetchData() {
             const response = await getSession();
-            const getMail = await getSessionEmail(response) as string | undefined;
             setSession(response);
+            const checkOtp = await checkIfOtpVerified(response);
+
+            setTestOne(checkOtp as boolean | undefined);
+            const getMail = await getSessionEmail(response) as string | undefined;
             setEmailFromDB(getMail);
 
             setLoading(false);
@@ -38,7 +43,7 @@ export default function Page() {
     }
 
     if (loading) return <div>Loading...</div>;
-    if (!session) return notFound();
+    if (testOne || !session) return notFound();
 
 
     async function handleChangeOtpMail(formData: FormData) {
@@ -100,7 +105,7 @@ export default function Page() {
 
             <button type="submit" className="reg" ref={verifyOtpRef}>Change mail</button>
 
-            <Link href='/otp' className="alr"  >You don't want to change email? Return</Link>
+            <Link href='/otp' className="alr"  >You don&#39;t want to change email? Return</Link>
 
         </form>
     )
