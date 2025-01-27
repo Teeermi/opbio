@@ -64,3 +64,73 @@ body {
     font-weight: 500;
     background-color: #202021;
 }
+
+.submitBtn {
+    all: unset;
+    margin-top: 1rem;
+    width: 22.6rem;
+    height: 3.05rem;
+    border-radius: 0.9375rem;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 15.4px 6px rgba(0, 0, 0, 0.25);
+    color: #202021;
+
+    font-family: Onest;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.submitBtn:hover {
+    cursor: pointer;
+}
+
+.tos {
+    margin-left: 1.7rem;
+    display: flex;
+    gap: 0.88rem;
+    width: 22.6rem;
+}
+
+.tos label {
+    color: #D9D9D9;
+
+    text-align: center;
+    font-family: Onest;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 600;
+
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #23232329;
+}
+
+.errorBorder {
+    border: 1px solid #800101;
+}
+
+.username h3, .password h3, .email h3, .invite h3 {
+    color: #800101;
+    font-family: Onest, serif;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 0.25rem;
+}
+
+.successOtp {
+    background-color: #2fff00;
+    transition: background-color 3s ease;
+}
