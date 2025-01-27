@@ -6,9 +6,8 @@ import { Prisma } from "@prisma/client";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import bcrypt from 'bcryptjs';
-import {redirect} from "next/navigation";
 import {Resend} from "resend";
-import {createSession, decrypt, deleteSession, updateSession} from "@/app/_lib/sessions";
+import {createSession, decrypt, deleteSession} from "@/app/_lib/sessions";
 import {cookies} from "next/headers";
 
 
@@ -77,7 +76,8 @@ export async function createUser(formData: FormData) {
                 password: hashedPassword,
                 username: formData.get("username") as string,
                 invite: formData.get("invite") as string,
-                otpVerified: false
+                otpVerified: false,
+                twoFactorAuth: false
             }
         })
 
@@ -185,13 +185,15 @@ export async function getSession() {
 
 export async function getSessionEmail(session:string | undefined) {
     const sessionData = await decrypt(session);
+
     return sessionData?.userId;
 
 }
 
 export async function checkIfOtpVerified(session:string | undefined) {
     const sessionData = await decrypt(session);
-    return sessionData?.verifiedOtp;
+
+    return sessionData?.otpVerified;
 
 }
 
@@ -203,13 +205,13 @@ export async function resendOtp(session: string) {
 
     await prisma.otp.delete({
         where: {
-            email: sessionData?.userId
+            email: sessionData?.userId as string,
         }
     })
 
     await prisma.otp.create({
         data: {
-            email: sessionData?.userId,
+            email: sessionData?.userId as string,
             code: otpCode.toString(),
             date: new Date(Date.now()).toISOString()
         }
@@ -223,4 +225,88 @@ export async function resendOtp(session: string) {
     });
 
     return {status: "success", code: "SS"};
+}
+
+export async function login(formData: FormData) {
+
+        const emailOrUsername = formData.get("email") as string;
+        const tableFromAbove = emailOrUsername.split("");
+
+        const findIfEmail = tableFromAbove.find((e) => e === "@");
+        if (findIfEmail) {
+            const existEmail = await prisma.user.findUnique({
+                where: {
+                    email: emailOrUsername
+                },
+            });
+
+            if (existEmail) {
+                const findPassword = await bcrypt.compare(formData.get("password") as string, existEmail.password);
+
+                if (findPassword) {
+                    await deleteSession();
+                    await createSession(emailOrUsername, true);
+                    return {status: "success", code: "SS"};
+                } else {
+                    return {status: "error", code: "EE"};
+                }
+            } else {
+                return {status: "error", code: "EE"};
+            }
+
+        } else {
+            const existUsername = await prisma.user.findUnique({
+                where: {
+                    username: emailOrUsername
+                },
+            });
+
+            if (existUsername) {
+
+
+                const findPassword = await bcrypt.compare(formData.get("password") as string, existUsername.password);
+
+
+
+                if (findPassword) {
+                    if (!existUsername.otpVerified) {
+                        await deleteSession();
+                        await createSession(existUsername.email, false);
+                        const session = await getSession();
+
+                        await resendOtp(session as string);
+
+
+
+                        return {status: "error", code: "NOV"};
+                    }
+
+
+                    await deleteSession();
+                    await createSession(emailOrUsername, true);
+                    return {status: "success", code: "SS"};
+                } else {
+                    return {status: "error", code: "EUN"};
+                }
+            } else {
+                return {status: "error", code: "EUN"};
+            }
+        }
+
+
+}
+
+export async function findUserSettings(username: string) {
+  const userSettings = await prisma.settings.findUnique({
+    where: {
+      username: username
+    }
+  });
+
+  if (!userSettings) {
+    return {status: "error", code: "EUN"};
+  } else {
+    return userSettings;
+  }
+
 }
