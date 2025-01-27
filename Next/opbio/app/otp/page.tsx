@@ -1,7 +1,7 @@
 "use client"
 
 import "./main.css"
-import {getSession, resendOtp} from "@/app/_actions/actions";
+import {checkIfOtpVerified, getSession, resendOtp} from "@/app/_actions/actions";
 import {useEffect, useRef, useState} from "react";
 import {notFound, redirect} from "next/navigation";
 import Link from "next/link";
@@ -13,27 +13,39 @@ export default function Page() {
     const [session, setSession] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [timerExist, setTimerExist] = useState(false);
+    const [testOne, setTestOne] = useState<boolean | undefined>(undefined);
 
     const [otp, setOtp] = useState(new Array(6).fill(""));
-    const verifyOtpRef = useRef<HTMLFormElement>(null);
-    const resendCode = useRef<HTMLFormElement>(null);
+    const verifyOtpRef = useRef<HTMLButtonElement>(null);
+    const resendCode = useRef<HTMLHeadingElement>(null);
 
 
     useEffect(() => {
         async function fetchData() {
             const response: string | undefined = await getSession();
+            const checkOtp = await checkIfOtpVerified(response);
+
+            setTestOne(checkOtp as boolean | undefined);
+
+
             setSession(response);
             setLoading(false);
         }
 
         fetchData();
-        const timerExistFromCache = localStorage.getItem("timerExist") === "true";
-        setTimerExist(timerExistFromCache);
+
+        const resendTime = localStorage.getItem("resendTime");
+
+        if (new Date().getTime() - parseInt(resendTime as string) < 60000) {
+            setTimerExist(true);
+        }
+
 
     }, []);
 
     if (loading) return <div>Loading...</div>;
-    if (!session) return notFound();
+
+    if (testOne || !session) return notFound();
 
     function handleChange(value: string, index: number) {
         const newArr = [...otp];
@@ -91,7 +103,6 @@ async function apiOtpCall() {
 
     const data = await response.json();
 
-    console.log(data);
 
     if (data?.message === "Error") {
         if (verifyOtpRef.current) {
@@ -116,23 +127,30 @@ async function apiOtpCall() {
 async function handleResendCode() {
     if (session) {
         if (timerExist && resendCode.current) {
+
             resendCode.current.textContent = "You can resend code in 5 minutes";
             return;
         }
 
-        const response = await resendOtp(session);
 
+        const response = await resendOtp(session);
 
         if (response?.status === "success") {
             if (resendCode.current) {
 
                 resendCode.current.textContent = "Code has been sent";
+
+                const currentTime = new Date().getTime();
+
+                localStorage.setItem("resendTime", currentTime.toString());
+
+
                 setTimerExist(true);
-                localStorage.setItem("timerExist", "true");
+
                 setTimeout(() => {
                     setTimerExist(false);
+                }, 60000)
 
-                } , 500000);
 
             }
 
