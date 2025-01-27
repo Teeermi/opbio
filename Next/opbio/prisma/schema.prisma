@@ -22,6 +22,7 @@ model User {
   password String
   invite String @unique
   otpVerified Boolean
+  twoFactorAuth Boolean
 }
 
 model Invites {
@@ -33,4 +34,9 @@ model Otp {
   email String @unique
   code String
   date String
+}
+
+model Settings {
+  username String @unique
+  backGroundImg String
 }
