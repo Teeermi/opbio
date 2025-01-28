@@ -17,7 +17,7 @@ export default function Page() {
             const response = await findUserSettings(params.nick as string);
 
 
-
+        console.log(response)
 
             if (response?.status === "error") {
                 console.log("error");
@@ -38,7 +38,7 @@ export default function Page() {
 
     return <body style={{ background: `url(${userSettings.backGroundImg}) lightgray 50% / cover no-repeat` }} >
                 <main style={{border: "1px solid #112E68"}} >
-                        <div className="banner" style={{background: "url('/image 2.png') lightgray 50% / cover no-repeat"}} >
+                        <div className="banner" style={{background: `url(${userSettings.bannerImg}) lightgray 50% / cover no-repeat`}} >
 
                         </div>
                         <div className="profile">
@@ -56,7 +56,7 @@ export default function Page() {
                                         <i className="fa-brands fa-steam"></i>
                                     </div>
 
-                                    <img src="/image%201.png" alt=""/>
+                                    <img src={`${userSettings.avatarImg}`} alt=""/>
 
                                     <div className="leftSide2">
                                         <i className="fa-solid fa-chess-king"></i>
