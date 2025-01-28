@@ -39,4 +39,14 @@ model Otp {
 model Settings {
   username String @unique
   backGroundImg String
+  avatarImg String
+  bannerImg String
+  mainBorderColor String
+  linksTable String
+  groupsTable String
+  profileDescription String
+  nick String
+  discordInfo String
+  views Int
+  discordStatusBorderColor String
 }
