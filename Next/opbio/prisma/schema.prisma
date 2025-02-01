@@ -38,6 +38,8 @@ model Otp {
 
 model Settings {
   username String @unique
+  slash String @unique
+  nick String
   backGroundImg String
   avatarImg String
   bannerImg String
@@ -45,7 +47,6 @@ model Settings {
   linksTable String
   groupsTable String
   profileDescription String
-  nick String
   discordInfo String
   views Int
   discordStatusBorderColor String
