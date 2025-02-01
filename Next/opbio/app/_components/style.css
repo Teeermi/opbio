@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbarDashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+
+}
+
+.dashboardLinkActive {
+    all: unset;
+    border-radius: 0.625rem;
+    background: #252526;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    width: 14.25rem;
+    height: 3.125rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.dashboardLink {
+    all: unset;
+    width: 14.25rem;
+    height: 3.125rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sqrIconActive {
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: 0.3125rem;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 0.81rem;
+}
+
+
+.sqrIcon {
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: 0.3125rem;
+    background: #252526;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 0.81rem;
+}
+
+h1 {
+    color: rgba(255, 255, 255, 0.11);
+    font-family: Onest;
+    font-size: 0.9375rem;
+    font-weight: 600;
+
+}
+
+.sqrIcon i {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.11);
+
+}
+
+.awesomeActive {
+
+    color: #252526;
+    font-size: 1.25rem;
+
+}
+
+.h1NameActive {
+    color: #D9D9D9;
+
+    font-family: Onest;
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
+
+.discordLinkContainer {
+    width: 14.25rem;
+    height: 8.875rem;
+    border-radius: 0.625rem;
+    background: #8496DD;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sqrDiscordIcon {
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: 0.3125rem;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.sqrDiscordIcon i {
+    font-size: 1.25rem;
+    color: #8496DD;
+}
+
+.discordLinkContainer h1 {
+    color: #D9D9D9;
+    font-family: Onest;
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
+
+.discordLinkContainer h2 {
+    color: rgba(217, 217, 217, 0.47);
+    font-family: Onest;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.wrapperDiscordLinkContainer {
+    padding: 1rem 0 0 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.discordLoginButton {
+    all: unset;
+    width: 12.0625rem;
+    height: 1.875rem;
+    border-radius: 0.3125rem;
+    background: #D9D9D9;
+    color: #8496DD;
+    font-family: Onest;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
