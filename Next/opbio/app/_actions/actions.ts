@@ -296,10 +296,10 @@ export async function login(formData: FormData) {
 
 }
 
-export async function findUserSettings(username: string) {
+export async function findUserSettings(slash: string) {
   const userSettings = await prisma.settings.findUnique({
     where: {
-      username: username
+      slash: slash
     }
   });
 
