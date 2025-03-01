@@ -32,7 +32,8 @@ opbio is a feature-rich social platform built with **Next.js**, **React**, **Typ
    - Add the following environment variables:
      ```env
      DATABASE_URL=your_mysql_database_url
-     OTP_SECRET=your_otp_secret
+     SESSION_SECRET=your_session_secret
+     RESEND_API_KEY=your_resend_api_key
      ```
 
 4. Run the development server:
@@ -61,4 +62,4 @@ If you have any questions or suggestions, feel free to **DM me**!
 
 ### 🤝 Contributions & Feedback
 
-OpBio is still in development, and I'm open to feedback and contributions. If you find any issues or have improvements in mind, feel free to open an issue or send me a message!
+opbio is still in development, and I'm open to feedback and contributions. If you find any issues or have improvements in mind, feel free to open an issue or send me a message!
