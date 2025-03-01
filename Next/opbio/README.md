@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# opbio - Work in Progress
 
-## Getting Started
+opbio is a feature-rich social platform built with **Next.js**, **React**, **TypeScript**, **JavaScript**, **Prisma**, and **MySQL**. This project is designed to allow users to create personal profiles, similar to Discord, and engage with the community through forums and profile comments. The authentication system, including OTP verification and email updates, has been built entirely from scratch.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Custom User Profiles** – Every user gets a personalized profile, similar to Discord.
+- **Forum System** – Users can create and participate in discussions.
+- **Profile Comments** – Engage with others by commenting on their profiles.
+- **Secure Authentication** – Custom-built authentication system with OTP verification.
+- **Email Change with OTP** – Users can update their email securely.
+- **Modern Tech Stack** – Built with Next.js, React, TypeScript, JavaScript, Prisma, and MySQL.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Installation & Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```sh
+   git clone https://github.com/Teeermi/opbio.git
+   cd opbio
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```sh
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up environment variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - Create a `.env` file in the root directory
+   - Add the following environment variables:
+     ```env
+     DATABASE_URL=your_mysql_database_url
+     OTP_SECRET=your_otp_secret
+     ```
 
-## Deploy on Vercel
+4. Run the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```sh
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Build and start the production server:
+   ```sh
+   npm run build
+   npm run start
+   ```
+
+## 💻 Commands
+
+- **Start dev server**: `npm run dev`
+- **Build production**: `npm run build`
+- **Start production server**: `npm run start`
+
+## ❓ Questions?
+
+If you have any questions or suggestions, feel free to **DM me**!
+
+---
+
+### 🤝 Contributions & Feedback
+
+OpBio is still in development, and I'm open to feedback and contributions. If you find any issues or have improvements in mind, feel free to open an issue or send me a message!
