@@ -63,6 +63,13 @@ If you have any questions or suggestions, feel free to **DM me**!
 ## 🎥 Showcase
 
 https://prnt.sc/fFlHsU7uBV1t
+https://prnt.sc/imS1TI5nqtk1
+https://prnt.sc/t7U2ts9SXO9c
+https://prnt.sc/b8MjpcLjOjQz
+https://prnt.sc/Qk1jTEZUxzcZ
+https://prnt.sc/Pe4KKTgVex1H
+https://prnt.sc/vD9wQtL2YUHz
+https://prnt.sc/G9ziQHPFeyL1
 
 If you have any questions or suggestions, feel free to **DM me**!
 
