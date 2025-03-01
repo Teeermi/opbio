@@ -60,6 +60,14 @@ If you have any questions or suggestions, feel free to **DM me**!
 
 ---
 
+## 🎥 Showcase
+
+https://prnt.sc/fFlHsU7uBV1t
+
+If you have any questions or suggestions, feel free to **DM me**!
+
+---
+
 ### 🤝 Contributions & Feedback
 
 opbio is still in development, and I'm open to feedback and contributions. If you find any issues or have improvements in mind, feel free to open an issue or send me a message!

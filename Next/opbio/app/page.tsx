@@ -5,7 +5,7 @@ export default async function Home() {
     <div className="wrapper">
       <nav>
         <img
-          src="https://s3-alpha-sig.figma.com/img/4d1b/1b93/a7ed008cb385e998bfa2669d055f856d?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BNGVYnawDb~-lZqYi63gf2hn-iGN5pmgXHm4woQBLlYf~D3quh3IfjNsQm~xsYmqOd7v8r4YZXEPttRCVbD5SU5FSCEFrLJtBtz~~Enpk6ac6~9J27LO52AmuLMkFCvktTbJwkzTZTIQLHrTRAFFL6c6Q5XVNomDrQmsrI-XPhSTrirDnwjj8JCwp02ITgLtlIo8Axh6H0daqm8UgAG-2WmG5XCaJsSNgYIhEP27mTmUDdGvYeURiKtY~1ivuQk0yHFN2CjXJYOTI-O2K13XhiCj6RPQHARJxGNzqnk~Fd46lDznjnWCUQIhB~JX6C-JAkIw52j7GJlKQ6QTAVGV3g__"
+          src="https://s3-alpha-sig.figma.com/img/4d1b/1b93/a7ed008cb385e998bfa2669d055f856d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=tp5wlNnAf~FwoGrN~x5LyW1FvaTAtzIGq18HKx1-iZIVZ5WQs0T7GKXIm0GDdR~-qVop4RJ-QZxhbcgvYs0E8woNbK6y6IBl-MFhMQ4ihs9znbZtcP2TqD2qbTX8Wat90leWLnywMDaSzIzrNqgioQYLbVmJqV99DSgOtf3UmQitsYaWGUCm1b2iPbBgdohnJYbb9m9kWQKmyaIoD7ZuTZvWh1zeNOvGG2adhEgIpIa00-bkirnY6jNQo2AQXRVquyGTANP~uGBV9~xp35ybV2NMPv1AIPX1VQiYwfXiW8FVqgTWG7Ms2PxvRFyoPlm41mSI82ZPqnmPye4fX24nfw__"
           alt=""
         />
         <Link href="/login">Login</Link>
