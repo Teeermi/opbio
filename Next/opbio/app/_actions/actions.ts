@@ -204,7 +204,7 @@ export async function resendOtp(session: string) {
   });
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: sessionData?.userId as string,
     to: "mailto",
     subject: "Hello World",
     html: `${otpCode}`,
