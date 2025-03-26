@@ -51,46 +51,6 @@ export function Navbar() {
             Customize
           </h1>
         </Link>
-
-        <Link
-          href="/customize"
-          className={`dashboardLink${
-            pathname === "/customize" ? "Active" : ""
-          }`}
-        >
-          <div
-            className={`sqrIcon${pathname === "/customize" ? "Active" : ""}`}
-          >
-            <i
-              className={`fa-solid fa-tablet awesome${
-                pathname === "/customize" ? "Active" : ""
-              }`}
-            ></i>
-          </div>
-          <h1 className={`h1Name${pathname === "/customize" ? "Active" : ""}`}>
-            Customize
-          </h1>
-        </Link>
-
-        <Link
-          href="/customize"
-          className={`dashboardLink${
-            pathname === "/customize" ? "Active" : ""
-          }`}
-        >
-          <div
-            className={`sqrIcon${pathname === "/customize" ? "Active" : ""}`}
-          >
-            <i
-              className={`fa-solid fa-tablet awesome${
-                pathname === "/customize" ? "Active" : ""
-              }`}
-            ></i>
-          </div>
-          <h1 className={`h1Name${pathname === "/customize" ? "Active" : ""}`}>
-            Customize
-          </h1>
-        </Link>
       </div>
       <div className="discordLinkContainer">
         <div className="wrapperDiscordLinkContainer">

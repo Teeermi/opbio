@@ -290,3 +290,13 @@ export async function findUserSettings(slash: string) {
     return userSettings;
   }
 }
+
+export async function updateUserSettings(formData: FormData) {
+  const session = await getSession();
+  const sessionData = await decrypt(session);
+  console.log(sessionData);
+
+  const updateSettings = await prisma.settings.update({
+    where: {},
+  });
+}
