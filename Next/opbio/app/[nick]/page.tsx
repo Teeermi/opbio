@@ -3,7 +3,7 @@ import "./main.css";
 
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { findUserSettings } from "@/app/_actions/actions";
+import { findUserSettings } from "@/actions/actions";
 
 export default function Page() {
   const params = useParams();
