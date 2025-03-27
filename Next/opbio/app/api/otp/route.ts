@@ -1,6 +1,6 @@
-import prisma from "@/app/_lib/db";
+import prisma from "@/lib/db";
 import { cookies } from "next/headers";
-import { createSession, decrypt, deleteSession } from "@/app/_lib/sessions";
+import { createSession, decrypt, deleteSession } from "@/lib/sessions";
 
 export async function POST(request: Request) {
   const res = await request.json();

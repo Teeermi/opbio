@@ -1,8 +1,8 @@
 "use client";
 
-import { Navbar } from "@/app/_components/navbar";
+import { Navbar } from "@/components/navbar";
 import Form from "next/form";
-import { updateUserSettings } from "../_actions/actions";
+import { updateUserSettings } from "../../actions/actions";
 
 export default function Page() {
   async function handleSubmit(formData: FormData) {

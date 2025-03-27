@@ -7,7 +7,7 @@ import {
   checkIfOtpVerified,
   getSession,
   getSessionEmail,
-} from "@/app/_actions/actions";
+} from "@/actions/actions";
 import Link from "next/link";
 import "./main.css";
 
