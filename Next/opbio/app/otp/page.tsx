@@ -1,11 +1,7 @@
 "use client";
 
 import "./main.css";
-import {
-  checkIfOtpVerified,
-  getSession,
-  resendOtp,
-} from "@/app/_actions/actions";
+import { checkIfOtpVerified, getSession, resendOtp } from "@/actions/actions";
 import { useEffect, useRef, useState } from "react";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";

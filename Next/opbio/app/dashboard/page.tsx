@@ -1,4 +1,6 @@
-import { Navbar } from "@/app/_components/navbar";
+"use client";
+
+import { Navbar } from "@/components/navbar";
 
 export default function Page() {
   return (

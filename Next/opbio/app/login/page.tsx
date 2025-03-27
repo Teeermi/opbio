@@ -1,14 +1,17 @@
 "use client";
 
 import "./main.css";
-import { useRef } from "react";
-import { login } from "@/app/_actions/actions";
+import { useRef, useState } from "react";
+import { signIn } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function Page() {
   const verifyOtpRef = useRef<HTMLButtonElement>(null);
   const bg1 = useRef<HTMLDivElement>(null);
   const emailError = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
 
   function supportRefs(a: HTMLDivElement, b: HTMLDivElement, c: string) {
     a.textContent = c;
@@ -16,68 +19,30 @@ export default function Page() {
   }
 
   async function handleLogin(formData: FormData) {
-    if (!emailError.current || !bg1.current) return;
-
-    if (
-      !(formData.get("password") as string) ||
-      !(formData.get("email") as string)
-    ) {
-      supportRefs(
-        emailError.current,
-        bg1.current,
-        "Email or password is wrong"
-      );
-
-      return;
-    } else if ((formData.get("email") as string).length >= 50) {
-      supportRefs(
-        emailError.current,
-        bg1.current,
-        "Email or password is wrong"
-      );
-    } else {
-      emailError.current.textContent = "";
-      bg1.current.classList.remove("errorBorder");
-      const response = await login(formData);
-
-      if (response.code === "NOV") {
-        if (verifyOtpRef.current) {
-          verifyOtpRef.current.classList.add("successOtp");
-          verifyOtpRef.current.textContent = "Success";
-
-          setTimeout(() => {
-            redirect("/otp");
-          }, 5000);
-        }
-
-        return;
-      } else if (response.status === "error") {
-        supportRefs(
-          emailError.current,
-          bg1.current,
-          "Email or password is wrong"
-        );
-      } else {
-        if (verifyOtpRef.current) {
-          verifyOtpRef.current.classList.add("successOtp");
-          verifyOtpRef.current.textContent = "Success";
-
-          setTimeout(() => {
-            redirect("/dashboard");
-          }, 5000);
-        }
+    await signIn.email(
+      {
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+      },
+      {
+        onRequest: (ctx) => {
+          setLoading(true);
+        },
+        onResponse: (ctx) => {
+          setLoading(false);
+        },
+        onSuccess: async () => {
+          redirect("/dashboard");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
       }
-    }
+    );
   }
 
   return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        handleLogin(new FormData(e.currentTarget));
-      }}
-      className="wrapperMain"
-    >
+    <form action={handleLogin} className="wrapperMain">
       <div className="email">
         <h1>Email or username</h1>
         <div className="bg1" ref={bg1}>
@@ -101,7 +66,7 @@ export default function Page() {
       </div>
 
       <button className="submitBtn" ref={verifyOtpRef}>
-        Login
+        {loading ? <Loader2 size={16} className="animate-spin" /> : "Login"}
       </button>
     </form>
   );
